@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INTRODUCCIÓN A LA FISICOQUÍMICA - Termodinámica y Kinesiología (Facultad de Cs. Médicas - UCCuyo)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f7f9f6;
+      color: #1e293b;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Paleta Institucional UCCuyo (Verde Oliva) */
+    .text-accent { color: #436600; }
+    .bg-accent { background-color: #436600; }
+    .bg-accent-hover:hover { background-color: #324d00; }
+    .bg-accent-light { background-color: #f1f6eb; }
+    .border-accent { border-color: #436600; }
+
+    .text-primary { color: #436600; }
+    .bg-primary { background-color: #436600; }
+    .bg-primary-dark { background-color: #324d00; }
+    .border-primary { border-color: #436600; }
+    
+    .focus-accent:focus {
+      border-color: #436600;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(67, 102, 0, 0.2);
+    }
+    
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .interactive-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .interactive-card:hover {
+      transform: translateY(-2px);
+      border-color: #436600;
+      box-shadow: 0 10px 25px -5px rgba(67, 102, 0, 0.12);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-accent/20 text-gray-800">
+
+  <!-- Cabecera Institucional UCCuyo -->
+  <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+          FQ
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-gray-800 tracking-wide uppercase">INTRODUCCIÓN A LA FISICOQUÍMICA</h1>
+          <p class="text-xs text-gray-500 font-semibold">Lic. en Kinesiología y Fisiatría (Facultad de Cs. Médicas - UCCuyo)</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <!-- Botón Vademécum Teórico -->
+        <button onclick="openFormulasModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+          <i class="fa-solid fa-book-bookmark text-accent"></i>
+          <span class="hidden sm:inline">Vademécum</span>
+        </button>
+        <!-- Botón Guía de Uso -->
+        <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Guía de Uso</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido Principal con Barra Lateral -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+    
+    <!-- Menú de Navegación Lateral -->
+    <nav class="w-full lg:w-64 flex flex-row lg:flex-col gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit">
+      <button onclick="switchModule(1)" id="tab-btn-1" class="bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-atom"></i> <span>1. Agitación & Calor</span>
+      </button>
+      <button onclick="switchModule(2)" id="tab-btn-2" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-temperature-half"></i> <span>2. Escalas Térmicas</span>
+      </button>
+      <button onclick="switchModule(3)" id="tab-btn-3" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-flask"></i> <span>3. Calorimetría Tisular</span>
+      </button>
+      <button onclick="switchModule(4)" id="tab-btn-4" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-fire-flame-curved"></i> <span>4. Termoterapia Kinésica</span>
+      </button>
+      <button onclick="switchModule(5)" id="tab-btn-5" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-clipboard-check"></i> <span>5. Casos Clínicos</span>
+      </button>
+    </nav>
+
+    <!-- Área de Contenido Dinámico -->
+    <div class="flex-1 space-y-6">
+
+      <!-- ========================================================================= -->
+      <!-- MÓDULO 1: AGITACIÓN MOLECULAR, CALOR Y EQUILIBRIO TÉRMICO                 -->
+      <!-- ========================================================================= -->
+      <section id="module-1" class="module-view flex flex-col gap-6">
+        
+        <!-- Tarjeta de Contexto Teórico -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-cyan-600">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-800">Termodinámica Molecular</span>
+            <span class="text-xs bg-cyan-50 text-cyan-800 px-2.5 py-0.5 rounded border border-cyan-200 font-semibold font-mono">Energía Cinética & Ley Cero</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-800 mb-2">Temperatura, Agitación Molecular y Equilibrio Térmico</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            La <strong>temperatura (T)</strong> es una medida macroscópica de la <em>energía cinética media</em> de traslación de las partículas constituyentes (E<sub>c</sub> = 3/2 &middot; k<sub>B</sub> &middot; T). El <strong>calor (Q)</strong> es energía en tránsito espontáneo que fluye desde el cuerpo de mayor temperatura al de menor temperatura hasta alcanzar el <strong>equilibrio térmico</strong> (T<sub>A</sub> = T<sub>B</sub>).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Canvas Cámara de Agitación Térmica (8 cols) -->
+          <div class="lg:col-span-8 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col">
+            <div class="flex flex-wrap items-center justify-between pb-3 border-b border-slate-100 gap-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold uppercase text-slate-600">Cámara Cinética Bifásica</span>
+                <span id="systemStateBadge" class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-cyan-50 text-cyan-800 border border-cyan-200">
+                  Compartimentos Aislados
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="btnToggleBarrier" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-accent hover:bg-accent-hover text-white shadow-xs transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-lock-open" id="iconBarrier"></i>
+                  <span id="barrierBtnText">Habilitar Contacto Térmico</span>
+                </button>
+                <button id="btnResetSimulation" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-rotate-left"></i> Reiniciar
+                </button>
+              </div>
+            </div>
+
+            <!-- Canvas de Partículas con Termómetros Flotantes -->
+            <div class="relative w-full h-72 sm:h-80 bg-slate-950 rounded-xl mt-4 overflow-hidden border border-slate-800 shadow-inner">
+              <canvas id="kineticCanvas" class="w-full h-full block"></canvas>
+              
+              <!-- Termómetro Cámara A (Izquierda) -->
+              <div class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-xs px-3 py-2 rounded-xl border border-cyan-500/40 text-xs font-mono pointer-events-none">
+                <div class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Cámara Izq. (A)</div>
+                <div class="text-lg font-bold text-cyan-400"><span id="lblTempA">20.0</span> °C</div>
+                <div class="text-[11px] text-slate-300">Ec media: <span id="lblEcA" class="text-slate-100 font-bold">1.2</span> u.a.</div>
+              </div>
+
+              <!-- Termómetro Cámara B (Derecha) -->
+              <div class="absolute top-3 right-3 bg-slate-900/85 backdrop-blur-xs px-3 py-2 rounded-xl border border-rose-500/40 text-xs font-mono text-right pointer-events-none">
+                <div class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Cámara Der. (B)</div>
+                <div class="text-lg font-bold text-rose-400"><span id="lblTempB">80.0</span> °C</div>
+                <div class="text-[11px] text-slate-300">Ec media: <span id="lblEcB" class="text-slate-100 font-bold">3.8</span> u.a.</div>
+              </div>
+
+              <!-- Indicador Central de Flujo de Calor -->
+              <div id="heatFlowIndicator" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-slate-900/90 px-3.5 py-1.5 rounded-full border border-amber-500/50 text-amber-300 text-xs font-mono opacity-0 transition-opacity duration-300 shadow-lg pointer-events-none">
+                <i class="fa-solid fa-arrow-left animate-pulse"></i>
+                <span>Flujo Espontáneo de Calor (Q)</span>
+              </div>
+            </div>
+
+            <!-- Sliders de Control Térmico -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-3 border-t border-slate-100">
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-medium">
+                  <span class="text-cyan-700 font-bold">Temperatura Cámara A</span>
+                  <span id="dispSliderA" class="font-mono text-slate-800 font-bold">20.0 °C</span>
+                </div>
+                <input type="range" id="sliderTempA" min="0" max="100" value="20" class="w-full accent-cyan-600 h-2 bg-slate-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                  <span>0 °C (Baja agitación)</span>
+                  <span>100 °C</span>
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-medium">
+                  <span class="text-rose-700 font-bold">Temperatura Cámara B</span>
+                  <span id="dispSliderB" class="font-mono text-slate-800 font-bold">80.0 °C</span>
+                </div>
+                <input type="range" id="sliderTempB" min="0" max="100" value="80" class="w-full accent-rose-600 h-2 bg-slate-200 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                  <span>0 °C</span>
+                  <span>100 °C (Alta agitación)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-panel Lateral: Dilema Conceptual Temperatura vs. Calor (4 cols) -->
+          <div class="lg:col-span-4 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center gap-2 pb-2 border-b border-slate-100">
+                <div class="p-1.5 rounded-lg bg-amber-100 text-amber-800 font-bold">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Diferenciación Crucial</h3>
+              </div>
+              <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+                <strong>¿Mayor temperatura equivale a mayor calor transferido?</strong><br>
+                ¡No! La <strong>temperatura</strong> es una propiedad <em>intensiva</em> (independiente de la masa), mientras que el <strong>calor transferido</strong> es una magnitud <em>extensiva</em> (Q = m &middot; c &middot; &Delta;T).
+              </p>
+            </div>
+
+            <!-- Test Interactivo de Fusión de Hielo -->
+            <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 space-y-3">
+              <span class="text-xs font-bold text-accent flex items-center gap-1.5">
+                <i class="fa-solid fa-cube text-cyan-600"></i> Test de Fusión: Cubo de Hielo (50 g)
+              </span>
+
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <!-- Cerilla -->
+                <button id="btnTestCerilla" class="p-2.5 rounded-lg bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-400 text-left transition space-y-1 shadow-2xs">
+                  <div class="font-bold text-amber-700 flex items-center gap-1">
+                    <i class="fa-solid fa-fire text-amber-500"></i> Cerilla
+                  </div>
+                  <div class="text-[11px] text-slate-600">T = 600 &deg;C</div>
+                  <div class="text-[10px] text-slate-500 font-mono">m = 0.05 g</div>
+                </button>
+
+                <!-- Vaso de Agua -->
+                <button id="btnTestAgua" class="p-2.5 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-400 text-left transition space-y-1 shadow-2xs">
+                  <div class="font-bold text-blue-700 flex items-center gap-1">
+                    <i class="fa-solid fa-glass-water text-blue-500"></i> Vaso de Agua
+                  </div>
+                  <div class="text-[11px] text-slate-600">T = 20 &deg;C</div>
+                  <div class="text-[10px] text-slate-500 font-mono">m = 250 g</div>
+                </button>
+              </div>
+
+              <!-- Resultado -->
+              <div id="testIceResult" class="p-3 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 space-y-1">
+                <span>Selecciona un elemento para calcular cuánto hielo logra fundir (L<sub>f</sub> = 80 cal/g).</span>
+              </div>
+            </div>
+
+            <div class="p-3 bg-accent-light border border-accent/20 rounded-xl text-[11px] text-slate-700">
+              <strong class="text-accent block mb-0.5"><i class="fa-solid fa-stethoscope"></i> Relevancia Kinésica:</strong>
+              Un agente terapéutico con poca masa a muy alta temperatura transfiere escasa energía y genera riesgo de quemadura cutánea superficial sin lograr hiperemia muscular profunda.
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- MÓDULO 2: ESCALAS TERMOMÉTRICAS Y CONVERSIÓN INTERACTIVA                  -->
+      <!-- ========================================================================= -->
+      <section id="module-2" class="module-view hidden flex flex-col gap-6">
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-amber-500">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-800">Metrología Térmica</span>
+            <span class="text-xs bg-amber-50 text-amber-800 px-2.5 py-0.5 rounded border border-amber-200 font-semibold font-mono">Celsius &bull; Fahrenheit &bull; Kelvin</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-800 mb-2">Escalas Termométricas y Calibración Física</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Las escalas se definen por puntos fijos termodinámicos a 1 atmósfera de presión (101.325 kPa). La escala <strong>Celsius (°C)</strong> y <strong>Kelvin (K)</strong> son centígradas (100 divisiones entre fusión y ebullición), mientras la escala <strong>Fahrenheit (°F)</strong> posee 180 divisiones.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Columnas Reactivas Sincronizadas (7 cols) -->
+          <div class="lg:col-span-7 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wide flex items-center gap-2">
+              <i class="fa-solid fa-temperature-three-quarters text-accent"></i> Columnas Termométricas Reactivas en Sintonía
+            </h3>
+
+            <!-- Grid de Termómetros -->
+            <div class="grid grid-cols-3 gap-3 sm:gap-6 pt-4 pb-2 bg-slate-50 rounded-xl p-4 border border-slate-200">
+              <!-- Celsius -->
+              <div class="flex flex-col items-center">
+                <span class="text-xs font-bold text-cyan-700 mb-1">Celsius</span>
+                <div class="relative w-9 sm:w-11 h-60 bg-white rounded-full p-1 border-2 border-slate-300 flex flex-col justify-end shadow-inner">
+                  <div id="barCelsius" class="w-full bg-gradient-to-t from-cyan-600 to-blue-500 rounded-full transition-all duration-150" style="height: 37%;"></div>
+                  <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-cyan-600 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white shadow">
+                    °C
+                  </div>
+                </div>
+                <div class="mt-4 font-mono font-bold text-sm sm:text-base text-slate-800" id="valCelsius">37.0 °C</div>
+              </div>
+
+              <!-- Fahrenheit -->
+              <div class="flex flex-col items-center">
+                <span class="text-xs font-bold text-amber-700 mb-1">Fahrenheit</span>
+                <div class="relative w-9 sm:w-11 h-60 bg-white rounded-full p-1 border-2 border-slate-300 flex flex-col justify-end shadow-inner">
+                  <div id="barFahrenheit" class="w-full bg-gradient-to-t from-amber-500 to-orange-500 rounded-full transition-all duration-150" style="height: 37%;"></div>
+                  <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-amber-600 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white shadow">
+                    °F
+                  </div>
+                </div>
+                <div class="mt-4 font-mono font-bold text-sm sm:text-base text-slate-800" id="valFahrenheit">98.6 °F</div>
+              </div>
+
+              <!-- Kelvin -->
+              <div class="flex flex-col items-center">
+                <span class="text-xs font-bold text-purple-700 mb-1">Kelvin (SI)</span>
+                <div class="relative w-9 sm:w-11 h-60 bg-white rounded-full p-1 border-2 border-slate-300 flex flex-col justify-end shadow-inner">
+                  <div id="barKelvin" class="w-full bg-gradient-to-t from-purple-500 to-indigo-600 rounded-full transition-all duration-150" style="height: 37%;"></div>
+                  <div class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-purple-600 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white shadow">
+                    K
+                  </div>
+                </div>
+                <div class="mt-4 font-mono font-bold text-sm sm:text-base text-slate-800" id="valKelvin">310.15 K</div>
+              </div>
+            </div>
+
+            <!-- Slider Principal -->
+            <div class="pt-4 border-t border-slate-100 space-y-2">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-700 font-semibold">Variación de Temperatura Continua:</span>
+                <span class="text-accent font-mono text-sm font-bold" id="sliderTempScaleDisp">37.0 °C</span>
+              </div>
+              <input type="range" id="sliderScale" min="-50" max="150" step="0.5" value="37" class="w-full accent-accent h-2 bg-slate-200 rounded-lg cursor-pointer">
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                <span>-50 °C</span>
+                <span>0 °C (Fusión)</span>
+                <span>37 °C (Normotermia)</span>
+                <span>100 °C (Ebullición)</span>
+                <span>150 °C</span>
+              </div>
+            </div>
+
+            <!-- Puntos de Referencia Clínicos -->
+            <div class="flex flex-wrap gap-2 pt-1">
+              <button onclick="setReferenceTemp(-273.15)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-purple-700 font-mono border border-slate-200">Cero Absoluto (-273.15 °C)</button>
+              <button onclick="setReferenceTemp(0)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-cyan-700 font-mono border border-slate-200">Punto de Hielo (0 °C)</button>
+              <button onclick="setReferenceTemp(37)" class="px-2.5 py-1 rounded-lg bg-accent text-white text-[11px] font-mono shadow-xs font-semibold">Normotermia Humana (37 °C)</button>
+              <button onclick="setReferenceTemp(42)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-amber-700 font-mono border border-slate-200">Límite Hipertermia (42 °C)</button>
+              <button onclick="setReferenceTemp(100)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-rose-700 font-mono border border-slate-200">Ebullición del Agua (100 °C)</button>
+            </div>
+          </div>
+
+          <!-- Sub-panel Fórmulas y Cálculos Dinámicos (5 cols) -->
+          <div class="lg:col-span-5 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center gap-2 pb-2 border-b border-slate-100">
+                <i class="fa-solid fa-calculator text-accent"></i>
+                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Fórmulas y Desglose Paso a Paso</h3>
+              </div>
+              
+              <div class="mt-3 space-y-3 font-mono text-xs">
+                <!-- Tarjeta Celsius a Fahrenheit -->
+                <div class="p-3 rounded-xl bg-amber-50 border border-amber-200">
+                  <div class="text-amber-900 font-sans font-bold text-[11px] mb-1">De Celsius a Fahrenheit:</div>
+                  <div class="text-amber-800 font-bold text-sm">°F = (&deg;C &times; 9/5) + 32</div>
+                  <div id="stepCtoF" class="text-slate-700 text-[11px] mt-1 pt-1 border-t border-amber-200">
+                    °F = (37 &times; 1.8) + 32 = 98.6 °F
+                  </div>
+                </div>
+
+                <!-- Tarjeta Fahrenheit a Celsius -->
+                <div class="p-3 rounded-xl bg-cyan-50 border border-cyan-200">
+                  <div class="text-cyan-900 font-sans font-bold text-[11px] mb-1">De Fahrenheit a Celsius:</div>
+                  <div class="text-cyan-800 font-bold text-sm">°C = 5/9 &times; (°F - 32)</div>
+                  <div id="stepFtoC" class="text-slate-700 text-[11px] mt-1 pt-1 border-t border-cyan-200">
+                    °C = (98.6 - 32) / 1.8 = 37.0 °C
+                  </div>
+                </div>
+
+                <!-- Tarjeta Kelvin -->
+                <div class="p-3 rounded-xl bg-purple-50 border border-purple-200">
+                  <div class="text-purple-900 font-sans font-bold text-[11px] mb-1">Escala Absoluta (Kelvin):</div>
+                  <div class="text-purple-800 font-bold text-sm">K = °C + 273.15</div>
+                  <div id="stepK" class="text-slate-700 text-[11px] mt-1 pt-1 border-t border-purple-200">
+                    K = 37 + 273.15 = 310.15 K
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-accent-light border border-accent/20 text-[11px] text-slate-700">
+              <strong class="text-accent block mb-0.5"><i class="fa-solid fa-book-medical"></i> Aplicación Kinésica:</strong>
+              La literatura fisioterapéutica anglosajona reporta protocolos de inmersión en agua helada en °F (ej. 50 &deg;F = 10 &deg;C). Conocer la conversión previene hipotermia o necrosis tisular por frío.
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- MÓDULO 3: CALORIMETRÍA Y TEJIDOS BIOLÓGICOS                               -->
+      <!-- ========================================================================= -->
+      <section id="module-3" class="module-view hidden flex flex-col gap-6">
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-accent">Termometría Cuantitativa</span>
+            <span class="text-xs bg-accent-light text-accent px-2.5 py-0.5 rounded border border-accent/20 font-semibold font-mono">Q = m &middot; c &middot; &Delta;T</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-800 mb-2">Laboratorio de Calorimetría Tisular y Agentes Térmicos</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            El <strong>calor específico (c)</strong> es la energía necesaria para elevar un grado Celsius la temperatura de un gramo de sustancia. El agua posee un calor específico excepcionalmente alto (1.00 cal/(g&middot;&deg;C) o 4.184 J/(g&middot;&deg;C)), lo que la convierte en el termorregulador biológico ideal frente a lípidos, hueso y parafina.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Parámetros de la Sustancia (6 cols) -->
+          <div class="lg:col-span-6 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wide flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-accent"></i> Parámetros de Simulación Calorimétrica
+            </h3>
+
+            <!-- Selector de Material -->
+            <div class="space-y-1.5">
+              <label class="text-xs text-slate-700 font-semibold">Material o Sustancia Biológica / Terapéutica:</label>
+              <select id="selMaterial" class="w-full bg-slate-50 border border-slate-300 text-slate-800 rounded-xl p-2.5 text-xs font-medium focus:ring-2 focus:ring-accent outline-none">
+                <option value="water" data-c-cal="1.00" data-c-j="4.184" selected>Agua Líquida (Hidroterapia / Compresas) [c = 1.00 cal/g·°C]</option>
+                <option value="muscle" data-c-cal="0.86" data-c-j="3.60">Tejido Muscular Humano [c = 0.86 cal/g·°C]</option>
+                <option value="fat" data-c-cal="0.55" data-c-j="2.30">Tejido Adiposo (Grasa Subcutánea) [c = 0.55 cal/g·°C]</option>
+                <option value="bone" data-c-cal="0.30" data-c-j="1.26">Hueso Compacto [c = 0.30 cal/g·°C]</option>
+                <option value="paraffin" data-c-cal="0.51" data-c-j="2.13">Parafina Terapéutica Fisiátrica [c = 0.51 cal/g·°C]</option>
+                <option value="iron" data-c-cal="0.11" data-c-j="0.46">Hierro / Mancuernas de Gimnasio [c = 0.11 cal/g·°C]</option>
+              </select>
+            </div>
+
+            <!-- Slider Masa -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-600 font-medium">Masa (m):</span>
+                <span id="dispMasa" class="font-mono text-accent font-bold">500 g (0.50 kg)</span>
+              </div>
+              <input type="range" id="sliderMasa" min="50" max="2000" step="25" value="500" class="w-full accent-accent h-2 bg-slate-200 rounded-lg cursor-pointer">
+            </div>
+
+            <!-- Temperatura Inicial -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-600 font-medium">Temperatura Inicial (T<sub>i</sub>):</span>
+                <span id="dispTi" class="font-mono text-cyan-700 font-bold">20.0 °C</span>
+              </div>
+              <input type="range" id="sliderTi" min="0" max="75" step="0.5" value="20" class="w-full accent-cyan-600 h-2 bg-slate-200 rounded-lg cursor-pointer">
+            </div>
+
+            <!-- Temperatura Final -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-600 font-medium">Temperatura Final (T<sub>f</sub>):</span>
+                <span id="dispTf" class="font-mono text-rose-700 font-bold">42.0 °C</span>
+              </div>
+              <input type="range" id="sliderTf" min="0" max="75" step="0.5" value="42" class="w-full accent-rose-600 h-2 bg-slate-200 rounded-lg cursor-pointer">
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Variación Térmica (&Delta;T = T<sub>f</sub> - T<sub>i</sub>):</span>
+              <span id="dispDeltaT" class="text-amber-700 font-bold text-sm">+22.0 °C</span>
+            </div>
+          </div>
+
+          <!-- Sub-panel Resultados Energéticos (6 cols) -->
+          <div class="lg:col-span-6 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-slate-100">
+                <i class="fa-solid fa-bolt text-accent"></i> Balance de Energía y Capacidad Calorífica
+              </h3>
+
+              <!-- Grid de Métricas -->
+              <div class="grid grid-cols-2 gap-3 mt-4">
+                <div class="p-3 rounded-xl bg-accent-light border border-accent/20">
+                  <span class="text-[10px] text-accent font-mono uppercase font-bold">Calor (Q) en Calorías</span>
+                  <div class="text-base sm:text-lg font-bold font-mono text-slate-800 mt-1" id="resQcal">11,000 cal</div>
+                  <span class="text-[10px] text-slate-500" id="resQkcal">11.00 kcal</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-cyan-50 border border-cyan-200">
+                  <span class="text-[10px] text-cyan-800 font-mono uppercase font-bold">Calor (Q) en Joules (SI)</span>
+                  <div class="text-base sm:text-lg font-bold font-mono text-cyan-900 mt-1" id="resQjoules">46,024 J</div>
+                  <span class="text-[10px] text-slate-500" id="resQkj">46.02 kJ</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                  <span class="text-[10px] text-slate-600 font-mono uppercase font-bold">Calor Específico (c)</span>
+                  <div class="text-xs sm:text-sm font-bold font-mono text-slate-800 mt-1" id="resCval">1.00 cal/(g·°C)</div>
+                  <span class="text-[10px] text-slate-500" id="resCjval">4.184 J/(g·°C)</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-purple-50 border border-purple-200">
+                  <span class="text-[10px] text-purple-800 font-mono uppercase font-bold">Capacidad (C = m &middot; c)</span>
+                  <div class="text-xs sm:text-sm font-bold font-mono text-purple-900 mt-1" id="resCapCalorifica">500 cal/°C</div>
+                  <span class="text-[10px] text-slate-500">Inercia térmica total</span>
+                </div>
+              </div>
+
+              <!-- Gráfico de Comparativa -->
+              <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                <span class="text-xs font-semibold text-slate-700">Inercia Térmica Relativa frente al Agua (c = 1.00):</span>
+                <div class="text-[11px] text-slate-600 space-y-1.5 font-mono">
+                  <div class="flex items-center justify-between">
+                    <span>Agua (1.00):</span>
+                    <div class="w-40 bg-slate-200 h-2 rounded-full overflow-hidden">
+                      <div class="bg-blue-600 h-full w-full"></div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span>Músculo (0.86):</span>
+                    <div class="w-40 bg-slate-200 h-2 rounded-full overflow-hidden">
+                      <div class="bg-emerald-600 h-full w-[86%]"></div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span>Grasa (0.55):</span>
+                    <div class="w-40 bg-slate-200 h-2 rounded-full overflow-hidden">
+                      <div class="bg-amber-500 h-full w-[55%]"></div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span>Parafina (0.51):</span>
+                    <div class="w-40 bg-slate-200 h-2 rounded-full overflow-hidden">
+                      <div class="bg-orange-500 h-full w-[51%]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-accent-light border border-accent/20 text-[11px] text-slate-700">
+              <strong class="text-accent block mb-0.5"><i class="fa-solid fa-notes-medical"></i> Ventaja de la Parafina:</strong>
+              Al tener la mitad del calor específico del agua (c &asymp; 0.51), una inmersión a 52 &deg;C entrega calor de forma gradual y segura sin provocar quemaduras dérmicas.
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- MÓDULO 4: TERMORREGULACIÓN Y TERMOTERAPIA KINÉSICA                        -->
+      <!-- ========================================================================= -->
+      <section id="module-4" class="module-view hidden flex flex-col gap-6">
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-rose-500">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-rose-800">Fisioterapia Térmica</span>
+            <span class="text-xs bg-rose-50 text-rose-800 px-2.5 py-0.5 rounded border border-rose-200 font-semibold font-mono">Transferencia &bull; Vasomotricidad &bull; Tejidos</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-800 mb-2">Mecanismos de Transferencia y Modalidades Fisiátricas</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Integración de los cuatro modos físicos de propagación del calor (<strong>Conducción, Convección, Radiación y Evaporación</strong>) con las respuestas autonómicas periféricas y la penetración tisular de la termoterapia superficial vs. profunda.
+          </p>
+        </div>
+
+        <!-- 4 Mecanismos en Tarjetas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Conducción -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">1. Conducción</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Contacto directo molecular sin transferencia de masa física macroscópica.
+            </p>
+            <div class="text-[11px] font-medium text-blue-900 bg-blue-50 p-2 rounded-xl border border-blue-200">
+              <strong>Kinésica:</strong> Compresas húmedo-calientes (Hot-Packs), Cryogel.
+            </div>
+          </div>
+
+          <!-- Convección -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-water"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">2. Convección</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Transporte térmico por desplazamiento macroscópico de masas de fluido.
+            </p>
+            <div class="text-[11px] font-medium text-cyan-900 bg-cyan-50 p-2 rounded-xl border border-cyan-200">
+              <strong>Kinésica:</strong> Baños de remolino (Whirlpool) y turbinas.
+            </div>
+          </div>
+
+          <!-- Radiación -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-sun"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">3. Radiación</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Propagación por ondas electromagnéticas infrarrojas sin requerir medio material.
+            </p>
+            <div class="text-[11px] font-medium text-amber-900 bg-amber-50 p-2 rounded-xl border border-amber-200">
+              <strong>Kinésica:</strong> Lámparas de Infrarrojo terapéutico (IR).
+            </div>
+          </div>
+
+          <!-- Evaporación -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-wind"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">4. Evaporación</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Consumo de calor latente (540 cal/g) al vaporizarse el líquido cutáneo.
+            </p>
+            <div class="text-[11px] font-medium text-emerald-900 bg-emerald-50 p-2 rounded-xl border border-emerald-200">
+              <strong>Kinésica:</strong> Sudoración activa y crioevaporación (sprays fríos).
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulador Vascular & Penetrancia Tisular -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Panel Vascular (6 cols) -->
+          <div class="lg:col-span-6 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-heart-pulse text-rose-600"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Microcirculación Cutánea & Termorregulación</h3>
+                </div>
+                <span id="vascularBadge" class="text-xs font-mono px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-800 border border-cyan-300 font-semibold">
+                  Vasoconstricción Activa
+                </span>
+              </div>
+
+              <!-- Canvas Vascular -->
+              <div class="relative w-full h-44 bg-slate-950 rounded-xl mt-3 overflow-hidden border border-slate-800 shadow-inner flex items-center justify-center">
+                <canvas id="vascularCanvas" class="w-full h-full block"></canvas>
+                <div class="absolute bottom-2 left-2 bg-slate-900/85 px-2.5 py-1 rounded-lg text-[10px] font-mono text-slate-300 pointer-events-none">
+                  Flujo capilar: <span id="lblLumenFlow" class="text-white font-bold">Mínimo (~5 mL/min)</span>
+                </div>
+              </div>
+
+              <!-- Selector de Estímulo -->
+              <div class="mt-4 space-y-2">
+                <label class="text-xs text-slate-700 font-semibold">Estímulo Térmico Aplicado:</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <button onclick="setVascularStimulus('cold')" id="btnStimCold" class="p-2 rounded-xl bg-cyan-100 border border-cyan-400 text-xs font-semibold text-cyan-900 flex flex-col items-center">
+                    <i class="fa-solid fa-snowflake mb-1 text-cyan-600"></i>
+                    <span>Frío (&lt;15 °C)</span>
+                    <span class="text-[9px] text-cyan-700 font-normal">Vasoconstricción</span>
+                  </button>
+                  <button onclick="setVascularStimulus('neutral')" id="btnStimNeutral" class="p-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex flex-col items-center">
+                    <i class="fa-solid fa-shield-halved mb-1 text-slate-500"></i>
+                    <span>Neutro (33 °C)</span>
+                    <span class="text-[9px] text-slate-500 font-normal">Tono Basal</span>
+                  </button>
+                  <button onclick="setVascularStimulus('heat')" id="btnStimHeat" class="p-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex flex-col items-center">
+                    <i class="fa-solid fa-fire mb-1 text-rose-500"></i>
+                    <span>Calor (&gt;40 °C)</span>
+                    <span class="text-[9px] text-rose-700 font-normal">Vasodilatación</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="vascularExplanation" class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed">
+              <strong class="text-cyan-800">Vasoconstricción por Frío (Crioterapia):</strong> Activación de receptores adrenérgicos en el músculo liso vascular. Disminuye la presión hidrostática capilar evitando el edema en fase aguda y reduciendo la conducción nerviosa.
+            </div>
+          </div>
+
+          <!-- Panel Profundidad Tisular (6 cols) -->
+          <div class="lg:col-span-6 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-bullseye text-accent"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Profundidad Tisular de Agentes Térmicos</h3>
+                </div>
+                <span class="text-xs font-mono text-slate-500 font-semibold">Gradiente Térmico</span>
+              </div>
+
+              <!-- Selector de Modalidad -->
+              <div class="mt-3 space-y-2">
+                <label class="text-xs text-slate-700 font-semibold">Modalidad de Termoterapia Kinésica:</label>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <button onclick="setModalidad('superficial')" id="btnModSup" class="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-left font-medium text-amber-900 shadow-2xs">
+                    <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-amber-600"></i> Superficial</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5">Compresas / Parafina</div>
+                    <div class="text-[9px] text-amber-700 font-mono mt-0.5">Penetración: 0.5 - 1.5 cm</div>
+                  </button>
+                  <button onclick="setModalidad('profunda')" id="btnModProf" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left font-medium text-slate-700">
+                    <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-tower-broadcast text-rose-500"></i> Profunda</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5">Ultrasonido Continuo</div>
+                    <div class="text-[9px] text-slate-500 font-mono mt-0.5">Penetración: 3.0 - 5.0 cm</div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Gradiente de Capas Tisulares -->
+              <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                <span class="text-xs font-semibold text-slate-700">Comportamiento en Profundidad Tisular:</span>
+
+                <div class="space-y-1.5 text-xs font-mono">
+                  <div class="flex items-center gap-2">
+                    <div class="w-24 text-[11px] text-slate-600 font-bold">Piel (0-2 mm)</div>
+                    <div class="flex-1 bg-slate-200 h-6 rounded-md relative overflow-hidden flex items-center px-2">
+                      <div id="barSkin" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-rose-500 to-amber-500 transition-all duration-300" style="width: 85%;"></div>
+                      <span id="tempSkin" class="relative z-10 text-[10px] font-bold text-white">41.5 °C (Efectivo)</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <div class="w-24 text-[11px] text-slate-600 font-bold">Grasa (0.5-2 cm)</div>
+                    <div class="flex-1 bg-slate-200 h-6 rounded-md relative overflow-hidden flex items-center px-2">
+                      <div id="barFat" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-amber-500 to-yellow-500 transition-all duration-300" style="width: 50%;"></div>
+                      <span id="tempFat" class="relative z-10 text-[10px] font-bold text-white">38.2 °C (Aislante)</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <div class="w-24 text-[11px] text-slate-600 font-bold">Músculo (3-5 cm)</div>
+                    <div class="flex-1 bg-slate-200 h-6 rounded-md relative overflow-hidden flex items-center px-2">
+                      <div id="barMuscle" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-emerald-600 to-teal-500 transition-all duration-300" style="width: 20%;"></div>
+                      <span id="tempMuscle" class="relative z-10 text-[10px] font-bold text-white">37.2 °C (Inalterado)</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <div class="w-24 text-[11px] text-slate-600 font-bold">Hueso/Cápsula</div>
+                    <div class="flex-1 bg-slate-200 h-6 rounded-md relative overflow-hidden flex items-center px-2">
+                      <div id="barBone" class="absolute left-0 top-0 bottom-0 bg-slate-400 transition-all duration-300" style="width: 10%;"></div>
+                      <span id="tempBone" class="relative z-10 text-[10px] font-bold text-white">37.0 °C (Basal)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="modalidadExplanation" class="p-3 rounded-xl bg-accent-light border border-accent/20 text-[11px] text-slate-700">
+              <strong class="text-accent block mb-0.5"><i class="fa-solid fa-graduation-cap"></i> Principio Fisioterapéutico:</strong>
+              El tejido adiposo actúa como barrera aislante (k &asymp; 0.2 W/(m&middot;K)). La termoterapia superficial no alcanza contracturas profundas, para las cuales se prescribe Ultrasonido Continuo (conversión acústico-térmica).
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- MÓDULO 5: CASOS CLÍNICOS Y AUTOEVALUACIÓN                                -->
+      <!-- ========================================================================= -->
+      <section id="module-5" class="module-view hidden flex flex-col gap-6">
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-accent">Validación Formativa</span>
+            <span class="text-xs bg-accent-light text-accent px-2.5 py-0.5 rounded border border-accent/20 font-semibold font-mono">Autoevaluación Kinefisiátrica</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-800 mb-2">Casos Clínicos Interdisciplinarios y Autoevaluación</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Responde los siguientes casos clínicos formativos para consolidar el entendimiento de la termodinámica, calorimetría y mecanismos de transferencia en la práctica de la Kinesiología y Fisiatría.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Caso 1 -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-accent font-mono tracking-wider">Caso 1: Esguince Agudo de Tobillo</span>
+              <span class="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">Transferencia & Vasomotricidad</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium">
+              Un deportista sufre una entorsis aguda de tobillo con dolor punzante y edema activo. ¿Cuál es el fundamento fisicoquímico y vascular para prescribir crioterapia por conducción inmediata?
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs pt-1">
+              <button onclick="checkQuiz(1, 'a', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>A)</strong> El calor aumentaría la evaporación cutánea, deshidratando los ligamentos.
+              </button>
+              <button onclick="checkQuiz(1, 'b', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>B)</strong> La extracción calórica induce vasoconstricción periférica, disminuyendo el flujo, el metabolismo local y el edema.
+              </button>
+              <button onclick="checkQuiz(1, 'c', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>C)</strong> El hielo tiene menor calor específico que la parafina, acelerando la mitosis.
+              </button>
+              <button onclick="checkQuiz(1, 'd', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>D)</strong> El frío eleva la energía cinética de las fibras de colágeno para regenerarlas.
+              </button>
+            </div>
+            <div id="quizFeedback1" class="hidden text-xs p-3 rounded-xl"></div>
+          </div>
+
+          <!-- Caso 2 -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-accent font-mono tracking-wider">Caso 2: Hidroterapia en Tanque de Whirlpool</span>
+              <span class="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">Convección & Calor Específico</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium">
+              En una tina con agua a 39 &deg;C, el paciente percibe un calentamiento mucho más rápido con las turbinas encendidas que con el agua en reposo. ¿Por qué ocurre esto?
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs pt-1">
+              <button onclick="checkQuiz(2, 'a', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>A)</strong> La convección forzada remueve de manera continua la capa límite de fluido enfriado, manteniendo un &Delta;T máximo.
+              </button>
+              <button onclick="checkQuiz(2, 'b', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>B)</strong> La agitación mecánica altera el calor específico del agua elevándolo a 2.5 cal/(g&middot;&deg;C).
+              </button>
+              <button onclick="checkQuiz(2, 'c', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>C)</strong> El rozamiento de las burbujas emite radiación electromagnética visible.
+              </button>
+              <button onclick="checkQuiz(2, 'd', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>D)</strong> El movimiento elimina la ley de Fourier de la termodinámica.
+              </button>
+            </div>
+            <div id="quizFeedback2" class="hidden text-xs p-3 rounded-xl"></div>
+          </div>
+
+          <!-- Caso 3 -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-accent font-mono tracking-wider">Caso 3: Cálculo Calorimétrico de Compresa</span>
+              <span class="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">Calorimetría Cuantitativa</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium">
+              Se aplican 800 g de compresa húmedo-caliente (c = 1.0 cal/(g&middot;&deg;C)) a 60 &deg;C que se enfría hasta los 40 &deg;C durante la sesión. ¿Qué calor Q transfirió?
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs pt-1">
+              <button onclick="checkQuiz(3, 'a', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>A)</strong> Q = 8,000 cal = 8 kcal
+              </button>
+              <button onclick="checkQuiz(3, 'b', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>B)</strong> Q = 16,000 cal = 16 kcal
+              </button>
+              <button onclick="checkQuiz(3, 'c', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>C)</strong> Q = 32,000 cal = 32 kcal
+              </button>
+              <button onclick="checkQuiz(3, 'd', this)" class="quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition">
+                <strong>D)</strong> Q = 48,000 cal = 48 kcal
+              </button>
+            </div>
+            <div id="quizFeedback3" class="hidden text-xs p-3 rounded-xl"></div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Modal: Vademécum Teórico de Fórmulas Térmicas -->
+  <div id="modal-formulas" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-accent p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-book-bookmark text-xl"></i>
+          <h3 class="font-bold text-base">Vademécum Teórico: Termodinámica y Fórmulas Fisiátricas</h3>
+        </div>
+        <button onclick="closeFormulasModal()" class="text-white hover:text-gray-200 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto space-y-6 text-xs md:text-sm text-gray-700 custom-scroll leading-relaxed">
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-calculator"></i> 1. Conversión de Escalas Termométricas
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong>Celsius a Fahrenheit:</strong><br>
+              &deg;F = (&deg;C &times; 9/5) + 32
+            </div>
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong>Fahrenheit a Celsius:</strong><br>
+              &deg;C = 5/9 &times; (&deg;F - 32)
+            </div>
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong>Celsius a Kelvin:</strong><br>
+              K = &deg;C + 273.15
+            </div>
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong>Kelvin a Celsius:</strong><br>
+              &deg;C = K - 273.15
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-flask"></i> 2. Ecuación Fundamental de la Calorimetría
+          </h4>
+          <div class="p-3.5 bg-accent-light rounded-xl border border-accent/20 space-y-1 text-xs">
+            <div class="font-mono font-bold text-accent text-sm">Q = m &middot; c &middot; &Delta;T</div>
+            <p><strong>Q:</strong> Calor cedido o absorbido (en cal o Joules, donde 1 cal = 4.184 J).</p>
+            <p><strong>m:</strong> Masa del cuerpo o sustancia (en g o kg).</p>
+            <p><strong>c:</strong> Calor específico unitario (cal/(g&middot;&deg;C)).</p>
+            <p><strong>&Delta;T:</strong> Variación de temperatura (T<sub>f</sub> - T<sub>i</sub>).</p>
+            <p><strong>C = m &middot; c = Q / &Delta;T:</strong> Capacidad calorífica o inercia térmica total del sistema.</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-table-list"></i> 3. Calores Específicos de Relevancia Kinésica
+          </h4>
+          <table class="w-full text-xs text-left border border-gray-200 rounded-lg overflow-hidden">
+            <thead class="bg-gray-100 text-gray-700 font-bold border-b border-gray-200">
+              <tr>
+                <th class="p-2">Material / Tejido</th>
+                <th class="p-2">c en cal/(g&middot;&deg;C)</th>
+                <th class="p-2">c en cal/(g&middot;&deg;C)</th>
+                <th class="p-2">Rol Kinefisiátrico</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-gray-600">
+              <tr>
+                <td class="p-2 font-bold text-accent">Agua Líquida</td>
+                <td class="p-2">1.00</td>
+                <td class="p-2">4.184</td>
+                <td class="p-2">Alta capacidad amortiguadora térmica.</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-800">Músculo Humano</td>
+                <td class="p-2">0.86</td>
+                <td class="p-2">3.600</td>
+                <td class="p-2">Rico en agua metabólica intracelular.</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-800">Grasa Subcutánea</td>
+                <td class="p-2">0.55</td>
+                <td class="p-2">2.300</td>
+                <td class="p-2">Barrera aislante térmica natural.</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-800">Parafina Fisiátrica</td>
+                <td class="p-2">0.51</td>
+                <td class="p-2">2.130</td>
+                <td class="p-2">Inmersión a 52 °C sin quemar al paciente.</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-800">Hueso Compacto</td>
+                <td class="p-2">0.30</td>
+                <td class="p-2">1.260</td>
+                <td class="p-2">Baja inercia, interfaz de reflexión acústica.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+        <button onclick="closeFormulasModal()" class="px-4 py-2 bg-accent text-white rounded-xl text-xs font-semibold hover:bg-accent-hover transition">
+          Cerrar Vademécum
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Guía de Uso del Simulador y Orientación Pedagógica -->
+  <div id="modal-tutorial" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-accent p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-xl"></i>
+          <h3 class="font-bold text-base">Guía de Uso del Simulador y Orientación Pedagógica</h3>
+        </div>
+        <button onclick="closeTutorial()" class="text-white hover:text-gray-200 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto space-y-5 text-xs md:text-sm text-gray-600 custom-scroll leading-relaxed">
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-bullseye"></i> 1. Propósito Tecnopedagógico
+          </h4>
+          <p>
+            Este simulador interactivo está concebido para estudiantes del curso de ingreso a la <strong>Licenciatura en Kinesiología y Fisiatría (Facultad de Ciencias Médicas - Universidad Católica de Cuyo)</strong>. Conecta los principios físico-químicos de la termodinámica clásica con la fisioterapia aplicada (agentes térmicos, hidroterapia, crioterapia y termorregulación).
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-compass"></i> 2. Guía Detallada de Módulos y Herramientas
+          </h4>
+          
+          <div class="space-y-3.5">
+            <!-- Módulo 1 -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+              <span class="font-bold text-accent text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-atom"></i> Módulo 1: Agitación Molecular, Calor y Equilibrio Térmico
+              </span>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                • <strong>Cámara Cinética Bifásica:</strong> Modifica de forma independiente las temperaturas de las cámaras A y B mediante los controles deslizantes para observar cómo la energía cinética molecular varía proporcionalmente a la temperatura.<br>
+                • <strong>Pared Diatérmica y Flujo Espontáneo:</strong> Habilita el contacto térmico para visualizar el flujo espontáneo de calor Q desde el cuerpo de mayor temperatura al de menor temperatura hasta que el sistema alcanza el equilibrio térmico (T<sub>A</sub> = T<sub>B</sub>). Puedes aislar nuevamente el compartimento o reiniciar la simulación en cualquier momento.<br>
+                • <strong>Dilema Conceptual (Cerilla vs. Vaso de Agua):</strong> Pon a prueba la diferencia entre variable intensiva (temperatura) y extensiva (calor) ejecutando el test de fusión de hielo: comprueba cómo una cerilla a 600 &deg;C con apenas 0.05 g de masa funde mucho menos hielo que un vaso con 250 g de agua tibia a 20 &deg;C.
+              </p>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+              <span class="font-bold text-accent text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-temperature-half"></i> Módulo 2: Escalas Termométricas y Conversión Dinámica
+              </span>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                • <strong>Columnas Reactivas Sincronizadas:</strong> Desplaza el control deslizante térmico continuo (-50 &deg;C a 150 &deg;C) para verificar en tiempo real las alturas de las columnas termométricas en Celsius (&deg;C), Fahrenheit (&deg;F) y Kelvin (K).<br>
+                • <strong>Puntos de Calibración Físicos y Clínicos:</strong> Botones de acceso directo para fijar temperaturas clave: Cero Absoluto (-273.15 &deg;C), Punto de Hielo (0 &deg;C), Normotermia Humana (37 &deg;C), Límite de Hipertermia (42 &deg;C) y Ebullición del Agua (100 &deg;C).<br>
+                • <strong>Desglose Algorítmico Paso a Paso:</strong> Visualiza en tarjetas interactivas el cálculo matemático exacto de las fórmulas de conversión (&deg;F, &deg;C y K) actualizadas dinámicamente con el valor seleccionado.
+              </p>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+              <span class="font-bold text-accent text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-flask"></i> Módulo 3: Calorimetría Tisular y Agentes Térmicos
+              </span>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                • <strong>Laboratorio Cuantitativo (Q = m &middot; c &middot; &Delta;T):</strong> Selecciona sustancias biológicas y terapéuticas (agua líquida, tejido muscular humano, grasa subcutánea, hueso compacto, parafina fisiátrica o pesas de hierro) y ajusta masa, temperatura inicial y temperatura final.<br>
+                • <strong>Balance Energético y Capacidad Calorífica:</strong> Calcula de forma instantánea el calor intercambiado Q tanto en calorías/kilocalorías como en Joules/kilojoules (SI), junto con la capacidad calorífica C (inercia térmica del cuerpo).<br>
+                • <strong>Comparador Gráfico de Inercia Térmica:</strong> Analiza por qué el agua es el vehículo fisioterápico por excelencia frente a la parafina o los tejidos corporales.
+              </p>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+              <span class="font-bold text-accent text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-fire-flame-curved"></i> Módulo 4: Mecanismos de Transferencia, Fisiología Vascular y Termoterapia
+              </span>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                • <strong>Los 4 Mecanismos Físicos:</strong> Repaso con ejemplos kinésicos de Conducción (hot-packs), Convección (tanque de remolino/whirlpool), Radiación (lámpara infrarroja) y Evaporación (sudoración y crioevaporadores).<br>
+                • <strong>Microcirculación Cutánea Interactiva:</strong> Aplica estímulo de Frío (&lt;15 &deg;C), Neutro (33 &deg;C) o Calor (&gt;40 &deg;C) para visualizar la respuesta vasomotora en el canvas (cierre de esfínteres precapilares vs. vasodilatación con hiperemia) y la variación de perfusión capilar.<br>
+                • <strong>Penetración Tisular por Capas:</strong> Conmuta entre Termoterapia Superficial (compresas/parafina, donde la grasa actúa como barrera aislante disipando el calor) y Termoterapia Profunda (ultrasonido continuo, calentando selectivamente el vientre muscular y periostio a 3-5 cm por absorción acústica).
+              </p>
+            </div>
+
+            <!-- Módulo 5 -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+              <span class="font-bold text-accent text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-clipboard-check"></i> Módulo 5: Casos Clínicos y Autoevaluación Kinefisiátrica
+              </span>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                • <strong>Reactivos Clínicos Formativos:</strong> Casos integradores sobre esguince agudo de tobillo (vasoconstricción crioterápica), tanque hidrostático de remolino (convección forzada y coeficiente de película) y cálculo calorimétrico de compresas.<br>
+                • <strong>Retroalimentación Inmediata:</strong> Validación de respuestas con explicaciones fisiológicas fundamentadas y notificaciones dinámicas tipo Toast.
+              </p>
+            </div>
+
+            <!-- Vademécum -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+              <span class="font-bold text-accent text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Vademécum Teórico y Herramientas Auxiliares
+              </span>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                • <strong>Botón Vademécum (Cabecera):</strong> Acceso en todo momento a las fórmulas de termometría, definiciones de variables calorimétricas y la tabla oficial de calores específicos de tejidos biológicos.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb"></i> 3. Aprendizaje Autónomo
+          </h4>
+          <p>
+            El entorno está diseñado conforme a los estándares pedagógicos de la UCCuyo: fomenta la exploración libre, el ensayo-error y la deducción experimental de los conceptos antes de la autoevaluación.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+        <button onclick="closeTutorial()" class="px-4 py-2 bg-accent text-white rounded-xl text-xs font-semibold hover:bg-accent-hover transition">
+          Entendido, comenzar exploración
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-medium transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none z-50 flex items-center gap-2">
+    <i class="fa-solid fa-circle-check text-lime-400 text-base" id="toast-icon"></i>
+    <span id="toast-msg">Notificación</span>
+  </div>
+
+  <!-- Footer Institucional Oficial UCCuyo -->
+  <footer class="bg-white border-t border-gray-200 py-3 text-center text-xs text-gray-500 font-medium">
+    Desarrollado por vesalio - Todos los derechos reservados
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: LÓGICA DE PROGRAMACIÓN Y SIMULACIÓN                         -->
+  <!-- ========================================================================= -->
+  <script>
+    /* ============================================================
+       1. NAVEGACIÓN ENTRE MÓDULOS
+       ============================================================ */
+    function switchModule(moduleIndex) {
+      document.querySelectorAll('.module-view').forEach(sec => sec.classList.add('hidden'));
+      const activeModule = document.getElementById(`module-${moduleIndex}`);
+      if (activeModule) activeModule.classList.remove('hidden');
+
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`tab-btn-${i}`);
+        if (btn) {
+          if (i === moduleIndex) {
+            btn.className = 'bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm flex items-center gap-2';
+          } else {
+            btn.className = 'text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition flex items-center gap-2';
+          }
+        }
+      }
+
+      setTimeout(() => {
+        if (moduleIndex === 1) resizeKineticCanvas();
+        if (moduleIndex === 4) resizeVascularCanvas();
+      }, 50);
+      setTimeout(() => {
+        if (moduleIndex === 1) resizeKineticCanvas();
+        if (moduleIndex === 4) resizeVascularCanvas();
+      }, 180);
+    }
+
+    /* ============================================================
+       2. MÓDULO 1: CÁMARA CINÉTICA Y EQUILIBRIO TÉRMICO
+       ============================================================ */
+    let kineticCanvas, ctxK;
+    let particlesA = [];
+    let particlesB = [];
+    const NUM_PARTICLES = 50;
+    let tempA = 20;
+    let tempB = 80;
+    let isThermalContact = false;
+    let animationFrameId;
+
+    class Particle {
+      constructor(x, y, chamber) {
+        this.x = x;
+        this.y = y;
+        this.chamber = chamber;
+        this.radius = 4;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = (Math.random() - 0.5) * 2;
+      }
+
+      update(speedFactor, minX, maxX, height) {
+        this.x += this.vx * speedFactor;
+        this.y += this.vy * speedFactor;
+
+        if (this.x - this.radius < minX) {
+          this.x = minX + this.radius;
+          this.vx *= -1;
+        }
+        if (this.x + this.radius > maxX) {
+          this.x = maxX - this.radius;
+          this.vx *= -1;
+        }
+        if (this.y - this.radius < 0) {
+          this.y = this.radius;
+          this.vy *= -1;
+        }
+        if (this.y + this.radius > height) {
+          this.y = height - this.radius;
+          this.vy *= -1;
+        }
+      }
+
+      draw(ctx, temp) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        const r = Math.min(255, Math.floor(temp * 2.55));
+        const b = Math.max(0, Math.floor(255 - temp * 2.55));
+        const g = Math.floor(120 - Math.abs(temp - 50) * 1.2);
+        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function initModule1Canvas() {
+      kineticCanvas = document.getElementById('kineticCanvas');
+      if (!kineticCanvas) return;
+      ctxK = kineticCanvas.getContext('2d');
+      resizeKineticCanvas();
+      createParticles();
+      cancelAnimationFrame(animationFrameId);
+      renderKineticChamber();
+    }
+
+    function resizeKineticCanvas() {
+      if (!kineticCanvas) return;
+      const rect = kineticCanvas.getBoundingClientRect();
+      const parent = kineticCanvas.parentElement;
+      const w = Math.floor(rect.width) || (parent ? parent.clientWidth : 0) || 680;
+      const h = Math.floor(rect.height) || (parent ? parent.clientHeight : 0) || 300;
+      if (w > 0 && h > 0) {
+        kineticCanvas.width = w;
+        kineticCanvas.height = h;
+      }
+      if (particlesA.length === 0 || particlesB.length === 0) {
+        createParticles();
+      }
+    }
+
+    function createParticles() {
+      if (!kineticCanvas) return;
+      particlesA = [];
+      particlesB = [];
+      const mid = kineticCanvas.width / 2;
+      const h = kineticCanvas.height;
+
+      for (let i = 0; i < NUM_PARTICLES; i++) {
+        particlesA.push(new Particle(Math.random() * (mid - 20) + 10, Math.random() * (h - 20) + 10, 'A'));
+        particlesB.push(new Particle(Math.random() * (mid - 20) + mid + 10, Math.random() * (h - 20) + 10, 'B'));
+      }
+    }
+
+    function renderKineticChamber() {
+      if (kineticCanvas && !ctxK) {
+        ctxK = kineticCanvas.getContext('2d');
+      }
+
+      if (ctxK && kineticCanvas && kineticCanvas.width > 0 && kineticCanvas.height > 0) {
+        const w = kineticCanvas.width;
+        const h = kineticCanvas.height;
+        const midX = w / 2;
+
+        ctxK.clearRect(0, 0, w, h);
+
+        if (isThermalContact) {
+          const transferRate = 0.08;
+          if (Math.abs(tempA - tempB) > 0.1) {
+            if (tempA < tempB) {
+              tempA += transferRate;
+              tempB -= transferRate;
+            } else {
+              tempA -= transferRate;
+              tempB += transferRate;
+            }
+            updateTempSlidersUI();
+          } else {
+            const badge = document.getElementById('systemStateBadge');
+            badge.textContent = "Equilibrio Térmico Alcanzado (Ta = Tb)";
+            badge.className = "text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300";
+            document.getElementById('heatFlowIndicator').style.opacity = '0';
+          }
+        }
+
+        const speedA = Math.sqrt((tempA + 15) / 100) * 2.2 + 0.3;
+        const speedB = Math.sqrt((tempB + 15) / 100) * 2.2 + 0.3;
+
+        document.getElementById('lblTempA').textContent = tempA.toFixed(1);
+        document.getElementById('lblTempB').textContent = tempB.toFixed(1);
+        document.getElementById('lblEcA').textContent = (speedA * 1.5).toFixed(1);
+        document.getElementById('lblEcB').textContent = (speedB * 1.5).toFixed(1);
+
+        particlesA.forEach(p => {
+          p.update(speedA, 0, isThermalContact ? w : midX, h);
+          p.draw(ctxK, tempA);
+        });
+
+        particlesB.forEach(p => {
+          p.update(speedB, isThermalContact ? 0 : midX, w, h);
+          p.draw(ctxK, tempB);
+        });
+
+        // Dibujar Barrera
+        ctxK.lineWidth = 3;
+        if (!isThermalContact) {
+          ctxK.strokeStyle = '#38bdf8';
+          ctxK.setLineDash([6, 4]);
+          ctxK.beginPath();
+          ctxK.moveTo(midX, 0);
+          ctxK.lineTo(midX, h);
+          ctxK.stroke();
+          ctxK.setLineDash([]);
+
+          ctxK.fillStyle = '#94a3b8';
+          ctxK.font = '10px JetBrains Mono';
+          ctxK.textAlign = 'center';
+          ctxK.fillText('Pared Aislante', midX, 15);
+        } else {
+          ctxK.strokeStyle = '#f59e0b';
+          ctxK.setLineDash([]);
+          ctxK.beginPath();
+          ctxK.moveTo(midX, 0);
+          ctxK.lineTo(midX, h);
+          ctxK.stroke();
+
+          ctxK.fillStyle = '#f59e0b';
+          ctxK.font = '10px JetBrains Mono';
+          ctxK.textAlign = 'center';
+          ctxK.fillText('Contacto Térmico (Conducción)', midX, 15);
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(renderKineticChamber);
+    }
+
+    function updateTempSlidersUI() {
+      document.getElementById('sliderTempA').value = tempA;
+      document.getElementById('sliderTempB').value = tempB;
+      document.getElementById('dispSliderA').textContent = `${tempA.toFixed(1)} °C`;
+      document.getElementById('dispSliderB').textContent = `${tempB.toFixed(1)} °C`;
+    }
+
+    function runIceTest(type) {
+      const resultDiv = document.getElementById('testIceResult');
+      const iceMass = 50;
+      const Lf = 80;
+
+      if (type === 'cerilla') {
+        const m = 0.05;
+        const deltaT = 600;
+        const c = 0.4;
+        const Q_disponible = m * c * deltaT;
+        const masa_fundida = (Q_disponible / Lf).toFixed(2);
+
+        resultDiv.innerHTML = `
+          <div class="text-amber-800 font-bold flex items-center gap-1">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Cerilla (Alta T, Masa Ínfima):
+          </div>
+          <div class="text-slate-700">
+            &bull; Calor liberado: <strong>Q = ${Q_disponible.toFixed(1)} cal</strong><br>
+            &bull; Hielo fundido: <strong>${masa_fundida} g de 50 g</strong> (${((masa_fundida/iceMass)*100).toFixed(1)}%).
+          </div>
+          <p class="text-slate-500 text-[11px] mt-1 italic">
+            "A pesar de sus 600 °C, su diminuta masa acumula escaso calor total. Sólo funde unas gotas."
+          </p>
+        `;
+      } else {
+        const m = 250;
+        const deltaT = 20;
+        const c = 1.0;
+        const Q_disponible = m * c * deltaT;
+        const masa_fundida = Math.min(iceMass, (Q_disponible / Lf)).toFixed(1);
+
+        resultDiv.innerHTML = `
+          <div class="text-emerald-800 font-bold flex items-center gap-1">
+            <i class="fa-solid fa-circle-check text-emerald-600"></i> Vaso de Agua (Baja T, Masa Alta):
+          </div>
+          <div class="text-slate-700">
+            &bull; Calor liberado: <strong>Q = ${Q_disponible.toLocaleString()} cal</strong><br>
+            &bull; Hielo fundido: <strong>${masa_fundida} g de 50 g (100% fundido)</strong>.
+          </div>
+          <p class="text-accent text-[11px] mt-1 font-semibold">
+            ¡Funde por completo el cubo de hielo! Queda comprobado que <strong>mayor temperatura no implica mayor calor transferible</strong>.
+          </p>
+        `;
+      }
+    }
+
+    /* ============================================================
+       3. MÓDULO 2: ESCALAS TERMOMÉTRICAS Y CONVERSIÓN
+       ============================================================ */
+    function initModule2Scales() {
+      const slider = document.getElementById('sliderScale');
+      if (slider) {
+        slider.addEventListener('input', (e) => {
+          updateThermometers(parseFloat(e.target.value));
+        });
+      }
+      updateThermometers(37);
+    }
+
+    function setReferenceTemp(val) {
+      const slider = document.getElementById('sliderScale');
+      if (slider) {
+        slider.value = val;
+        updateThermometers(val);
+      }
+    }
+
+    function updateThermometers(celsiusVal) {
+      const fahrenheitVal = (celsiusVal * 9 / 5) + 32;
+      const kelvinVal = celsiusVal + 273.15;
+
+      document.getElementById('sliderTempScaleDisp').textContent = `${celsiusVal.toFixed(1)} °C`;
+      document.getElementById('valCelsius').textContent = `${celsiusVal.toFixed(1)} °C`;
+      document.getElementById('valFahrenheit').textContent = `${fahrenheitVal.toFixed(1)} °F`;
+      document.getElementById('valKelvin').textContent = `${kelvinVal.toFixed(2)} K`;
+
+      const minC = -50;
+      const maxC = 150;
+      const clampedPct = Math.max(4, Math.min(96, ((celsiusVal - minC) / (maxC - minC)) * 100));
+
+      document.getElementById('barCelsius').style.height = `${clampedPct}%`;
+      document.getElementById('barFahrenheit').style.height = `${clampedPct}%`;
+      document.getElementById('barKelvin').style.height = `${clampedPct}%`;
+
+      document.getElementById('stepCtoF').innerHTML = `
+        &deg;F = (${celsiusVal.toFixed(1)} &times; 1.8) + 32 = <span class="text-amber-800 font-bold">${fahrenheitVal.toFixed(1)} &deg;F</span>
+      `;
+      document.getElementById('stepFtoC').innerHTML = `
+        &deg;C = (${fahrenheitVal.toFixed(1)} - 32) &times; (5/9) = <span class="text-cyan-800 font-bold">${celsiusVal.toFixed(1)} &deg;C</span>
+      `;
+      document.getElementById('stepK').innerHTML = `
+        K = ${celsiusVal.toFixed(1)} + 273.15 = <span class="text-purple-800 font-bold">${kelvinVal.toFixed(2)} K</span>
+      `;
+    }
+
+    /* ============================================================
+       4. MÓDULO 3: CALORIMETRÍA Y TEJIDOS
+       ============================================================ */
+    function initModule3Calorimetry() {
+      const inputs = ['selMaterial', 'sliderMasa', 'sliderTi', 'sliderTf'];
+      inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', calculateCalorimetry);
+      });
+      calculateCalorimetry();
+    }
+
+    function calculateCalorimetry() {
+      const sel = document.getElementById('selMaterial');
+      const opt = sel.options[sel.selectedIndex];
+      const cCal = parseFloat(opt.getAttribute('data-c-cal'));
+      const cJ = parseFloat(opt.getAttribute('data-c-j'));
+
+      const masa = parseFloat(document.getElementById('sliderMasa').value);
+      const ti = parseFloat(document.getElementById('sliderTi').value);
+      const tf = parseFloat(document.getElementById('sliderTf').value);
+
+      const deltaT = tf - ti;
+      const Qcal = masa * cCal * deltaT;
+      const Qjoules = masa * cJ * deltaT;
+      const CapCal = masa * cCal;
+
+      document.getElementById('dispMasa').textContent = `${masa} g (${(masa/1000).toFixed(2)} kg)`;
+      document.getElementById('dispTi').textContent = `${ti.toFixed(1)} °C`;
+      document.getElementById('dispTf').textContent = `${tf.toFixed(1)} °C`;
+
+      const sign = deltaT >= 0 ? '+' : '';
+      document.getElementById('dispDeltaT').textContent = `${sign}${deltaT.toFixed(1)} °C`;
+      document.getElementById('dispDeltaT').className = deltaT >= 0 ? 'text-amber-700 font-bold text-sm' : 'text-cyan-700 font-bold text-sm';
+
+      document.getElementById('resQcal').textContent = `${Math.round(Qcal).toLocaleString()} cal`;
+      document.getElementById('resQkcal').textContent = `${(Qcal / 1000).toFixed(2)} kcal`;
+      document.getElementById('resQjoules').textContent = `${Math.round(Qjoules).toLocaleString()} J`;
+      document.getElementById('resQkj').textContent = `${(Qjoules / 1000).toFixed(2)} kJ`;
+
+      document.getElementById('resCval').textContent = `${cCal.toFixed(2)} cal/(g·°C)`;
+      document.getElementById('resCjval').textContent = `${cJ.toFixed(2)} J/(g·°C)`;
+      document.getElementById('resCapCalorifica').textContent = `${Math.round(CapCal).toLocaleString()} cal/°C`;
+    }
+
+    /* ============================================================
+       5. MÓDULO 4: FISIOLOGÍA VASCULAR Y TERMOTERAPIA
+       ============================================================ */
+    let vascularCanvas, ctxV;
+    let bloodCells = [];
+    let vascularState = 'cold';
+    let vascularAnimId;
+
+    class BloodCell {
+      constructor(w, h) {
+        this.reset(w, h);
+      }
+      reset(w, h) {
+        this.x = -10;
+        this.y = (h / 2) + (Math.random() - 0.5) * (h * 0.4);
+        this.radius = 3.5;
+        this.speed = Math.random() * 1.5 + 1;
+      }
+      update(w, h, lumenFactor, speedMul) {
+        this.x += this.speed * speedMul;
+        const maxOffset = (h * 0.35) * lumenFactor;
+        const targetY = (h / 2) + (Math.random() - 0.5) * maxOffset;
+        this.y += (targetY - this.y) * 0.05;
+
+        if (this.x > w + 10) {
+          this.reset(w, h);
+        }
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#ef4444';
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = 'rgba(239, 68, 68, 0.5)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function initModule4Vascular() {
+      vascularCanvas = document.getElementById('vascularCanvas');
+      if (!vascularCanvas) return;
+      ctxV = vascularCanvas.getContext('2d');
+      resizeVascularCanvas();
+
+      bloodCells = [];
+      for (let i = 0; i < 35; i++) {
+        const cell = new BloodCell(vascularCanvas.width, vascularCanvas.height);
+        cell.x = Math.random() * vascularCanvas.width;
+        bloodCells.push(cell);
+      }
+
+      cancelAnimationFrame(vascularAnimId);
+      renderVascularLoop();
+    }
+
+    function resizeVascularCanvas() {
+      if (!vascularCanvas) return;
+      const rect = vascularCanvas.getBoundingClientRect();
+      const parent = vascularCanvas.parentElement;
+      const w = Math.floor(rect.width) || (parent ? parent.clientWidth : 0) || 500;
+      const h = Math.floor(rect.height) || (parent ? parent.clientHeight : 0) || 175;
+      if (w > 0 && h > 0) {
+        vascularCanvas.width = w;
+        vascularCanvas.height = h;
+      }
+    }
+
+    function renderVascularLoop() {
+      if (vascularCanvas && !ctxV) {
+        ctxV = vascularCanvas.getContext('2d');
+      }
+
+      if (ctxV && vascularCanvas && vascularCanvas.width > 0 && vascularCanvas.height > 0) {
+        const w = vascularCanvas.width;
+        const h = vascularCanvas.height;
+
+        ctxV.clearRect(0, 0, w, h);
+
+        let lumenRadius;
+        let speedMul = 1.0;
+        if (vascularState === 'cold') {
+          lumenRadius = h * 0.16;
+          speedMul = 0.6;
+        } else if (vascularState === 'neutral') {
+          lumenRadius = h * 0.28;
+          speedMul = 1.2;
+        } else {
+          lumenRadius = h * 0.42;
+          speedMul = 2.4;
+        }
+
+        const centerY = h / 2;
+
+        ctxV.fillStyle = '#831843';
+        ctxV.fillRect(0, 0, w, centerY - lumenRadius);
+        ctxV.fillStyle = '#f43f5e';
+        ctxV.fillRect(0, centerY - lumenRadius - 3, w, 3);
+
+        ctxV.fillStyle = '#831843';
+        ctxV.fillRect(0, centerY + lumenRadius, w, h - (centerY + lumenRadius));
+        ctxV.fillStyle = '#f43f5e';
+        ctxV.fillRect(0, centerY + lumenRadius, w, 3);
+
+        ctxV.fillStyle = 'rgba(159, 18, 57, 0.25)';
+        ctxV.fillRect(0, centerY - lumenRadius, w, lumenRadius * 2);
+
+        bloodCells.forEach(cell => {
+          cell.update(w, h, lumenRadius / (h * 0.35), speedMul);
+          cell.draw(ctxV);
+        });
+      }
+
+      vascularAnimId = requestAnimationFrame(renderVascularLoop);
+    }
+
+    function setVascularStimulus(stimulus) {
+      vascularState = stimulus;
+      const badge = document.getElementById('vascularBadge');
+      const flowLbl = document.getElementById('lblLumenFlow');
+      const exp = document.getElementById('vascularExplanation');
+
+      document.getElementById('btnStimCold').className = stimulus === 'cold' ?
+        'p-2 rounded-xl bg-cyan-100 border border-cyan-400 text-xs font-semibold text-cyan-900 flex flex-col items-center shadow-xs' :
+        'p-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex flex-col items-center';
+
+      document.getElementById('btnStimNeutral').className = stimulus === 'neutral' ?
+        'p-2 rounded-xl bg-slate-200 border border-slate-400 text-xs font-semibold text-slate-800 flex flex-col items-center shadow-xs' :
+        'p-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex flex-col items-center';
+
+      document.getElementById('btnStimHeat').className = stimulus === 'heat' ?
+        'p-2 rounded-xl bg-rose-100 border border-rose-400 text-xs font-semibold text-rose-900 flex flex-col items-center shadow-xs' :
+        'p-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex flex-col items-center';
+
+      if (stimulus === 'cold') {
+        badge.textContent = "Vasoconstricción Cutánea Activa";
+        badge.className = "text-xs font-mono px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 border border-cyan-300 font-semibold";
+        flowLbl.textContent = "Mínimo (~5 mL/min/100g) - Conservación";
+        exp.innerHTML = `
+          <strong class="text-cyan-800">Vasoconstricción por Frío (Crioterapia):</strong> Activación de receptores adrenérgicos en la musculatura lisa vascular. Disminuye la presión hidrostática capilar evitando el edema en fase aguda y reduce la velocidad de conducción de los nociceptores (analgesia).
+        `;
+      } else if (stimulus === 'neutral') {
+        badge.textContent = "Normotermia / Tono Basal";
+        badge.className = "text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300 font-semibold";
+        flowLbl.textContent = "Normal (~20 mL/min/100g) - Homeostasis";
+        exp.innerHTML = `
+          <strong class="text-slate-800">Tono Vascular Basal:</strong> En equilibrio térmico con el ambiente a 33 &deg;C cutáneos. Se mantiene la perfusión habitual sin requerir gasto termorregulador.
+        `;
+      } else {
+        badge.textContent = "Vasodilatación e Hiperemia Intensa";
+        badge.className = "text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 font-semibold";
+        flowLbl.textContent = "Aumentado (~120 mL/min/100g) - Disipación";
+        exp.innerHTML = `
+          <strong class="text-rose-800">Vasodilatación por Calor (Termoterapia):</strong> Liberación de óxido nítrico endotelial e inhibición del tono simpático. Genera hiperemia que barre catabolitos algógenos (ácido láctico) y relaja la espasticidad muscular.
+        `;
+      }
+    }
+
+    function setModalidad(tipo) {
+      const btnSup = document.getElementById('btnModSup');
+      const btnProf = document.getElementById('btnModProf');
+      const exp = document.getElementById('modalidadExplanation');
+
+      const barSkin = document.getElementById('barSkin');
+      const tempSkin = document.getElementById('tempSkin');
+      const barFat = document.getElementById('barFat');
+      const tempFat = document.getElementById('tempFat');
+      const barMuscle = document.getElementById('barMuscle');
+      const tempMuscle = document.getElementById('tempMuscle');
+      const barBone = document.getElementById('barBone');
+      const tempBone = document.getElementById('tempBone');
+
+      if (tipo === 'superficial') {
+        btnSup.className = "p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-left font-medium text-amber-900 shadow-2xs";
+        btnProf.className = "p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left font-medium text-slate-700";
+
+        barSkin.style.width = "85%";
+        tempSkin.textContent = "41.5 °C (Efectivo en piel)";
+        barFat.style.width = "50%";
+        tempFat.textContent = "38.2 °C (Barrera aislante)";
+        barMuscle.style.width = "20%";
+        tempMuscle.textContent = "37.2 °C (Inalterado)";
+        barBone.style.width = "10%";
+        tempBone.textContent = "37.0 °C (Basal)";
+
+        exp.innerHTML = `
+          <strong class="text-amber-900">Termoterapia Superficial (Compresas / Parafina):</strong> El calor se transfiere por conducción desde la superficie. Debido al alto espesor y baja conductividad de la grasa (k &asymp; 0.2 W/(m&middot;K)), la energía es disipada por el lecho capilar dérmico antes de penetrar planos musculares profundos.
+        `;
+      } else {
+        btnSup.className = "p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left font-medium text-slate-700";
+        btnProf.className = "p-2.5 rounded-xl bg-rose-50 border border-rose-300 text-left font-medium text-rose-900 shadow-2xs";
+
+        barSkin.style.width = "40%";
+        tempSkin.textContent = "37.8 °C (Protegida por gel)";
+        barFat.style.width = "45%";
+        tempFat.textContent = "38.0 °C";
+        barMuscle.style.width = "88%";
+        tempMuscle.textContent = "41.8 °C (Calentamiento Profundo)";
+        barBone.style.width = "75%";
+        tempBone.textContent = "40.5 °C (Reflexión acústica)";
+
+        exp.innerHTML = `
+          <strong class="text-rose-900">Termoterapia Profunda (Ultrasonido Continuo / Diatermia):</strong> La energía no viaja por gradiente de contacto, sino por <strong>conversión</strong>. Las ondas mecánicas de alta frecuencia generan calor directo por fricción en interfaces con alta resistencia acústica (músculo profundo y periostio), alcanzando 3 a 5 cm sin quemar la dermis.
+        `;
+      }
+    }
+
+    /* ============================================================
+       6. MÓDULO 5: EVALUACIÓN Y CASOS CLÍNICOS
+       ============================================================ */
+    function checkQuiz(questionNum, selectedOption, btnElement) {
+      const parent = btnElement.parentElement;
+      const allButtons = parent.querySelectorAll('.quiz-btn');
+      const feedbackDiv = document.getElementById(`quizFeedback${questionNum}`);
+
+      allButtons.forEach(b => {
+        b.className = 'quiz-btn text-left p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition';
+      });
+
+      let isCorrect = false;
+      let explanation = "";
+
+      if (questionNum === 1) {
+        if (selectedOption === 'b') {
+          isCorrect = true;
+          explanation = "<strong>¡Correcto!</strong> La extracción de calor por conducción induce vasoconstricción periférica inmediata y reduce la tasa metabólica tisular, conteniendo el edema y disminuyendo el dolor.";
+        } else {
+          explanation = "<strong>Incorrecto.</strong> La respuesta correcta es la <strong>B</strong>. La crioterapia persigue vasoconstricción y disminución metabólica, evitando la formación excesiva de exudado en la articulación.";
+        }
+      } else if (questionNum === 2) {
+        if (selectedOption === 'a') {
+          isCorrect = true;
+          explanation = "<strong>¡Correcto!</strong> La convección forzada producida por las turbinas del tanque renueva constantemente el agua caliente sobre la piel, impidiendo una capa fría estancada y manteniendo un gradiente &Delta;T alto.";
+        } else {
+          explanation = "<strong>Incorrecto.</strong> La opción correcta es la <strong>A</strong>. El calor específico es una constante física de la sustancia; el mayor calentamiento se debe a la convección forzada turbulenta.";
+        }
+      } else if (questionNum === 3) {
+        if (selectedOption === 'b') {
+          isCorrect = true;
+          explanation = "<strong>¡Excelente cálculo!</strong> Aplicando la fórmula: Q = m &middot; c &middot; &Delta;T = 800 g &times; 1.0 cal/(g&middot;&deg;C) &times; (60 - 40)&deg;C = 800 &times; 20 = 16,000 cal = 16 kcal.";
+        } else {
+          explanation = "<strong>Cálculo incorrecto.</strong> La respuesta correcta es la <strong>B (16,000 cal = 16 kcal)</strong>. Cálculo: Q = 800 &times; 1.0 &times; 20 = 16,000 cal.";
+        }
+      }
+
+      feedbackDiv.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'text-emerald-900', 'bg-rose-50', 'border-rose-300', 'text-rose-900');
+      if (isCorrect) {
+        btnElement.className = 'quiz-btn text-left p-3 rounded-xl bg-emerald-50 border-2 border-emerald-500 text-emerald-900 font-medium transition';
+        feedbackDiv.classList.add('bg-emerald-50', 'border', 'border-emerald-300', 'text-emerald-900');
+        showToast("¡Respuesta Correcta!");
+      } else {
+        btnElement.className = 'quiz-btn text-left p-3 rounded-xl bg-rose-50 border-2 border-rose-500 text-rose-900 font-medium transition';
+        feedbackDiv.classList.add('bg-rose-50', 'border', 'border-rose-300', 'text-rose-900');
+        showToast("Revisa la justificación teórica.");
+      }
+      feedbackDiv.innerHTML = explanation;
+    }
+
+    /* ============================================================
+       7. MODALES Y EVENTOS GENERALES
+       ============================================================ */
+    function openFormulasModal() {
+      document.getElementById('modal-formulas').classList.remove('hidden');
+    }
+    function closeFormulasModal() {
+      document.getElementById('modal-formulas').classList.add('hidden');
+    }
+    function openTutorial() {
+      document.getElementById('modal-tutorial').classList.remove('hidden');
+    }
+    function closeTutorial() {
+      document.getElementById('modal-tutorial').classList.add('hidden');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    function setupEventListeners() {
+      const btnToggle = document.getElementById('btnToggleBarrier');
+      if (btnToggle) {
+        btnToggle.addEventListener('click', () => {
+          isThermalContact = !isThermalContact;
+          const textSpan = document.getElementById('barrierBtnText');
+          const badge = document.getElementById('systemStateBadge');
+          const flowInd = document.getElementById('heatFlowIndicator');
+          const icon = document.getElementById('iconBarrier');
+
+          if (isThermalContact) {
+            textSpan.textContent = "Aislar Compartimentos (Pared Adiabática)";
+            btnToggle.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-600 hover:bg-amber-700 text-white transition flex items-center gap-1.5 shadow-xs";
+            icon.className = "fa-solid fa-lock";
+            badge.textContent = "Conducción Térmica en Progreso";
+            badge.className = "text-xs px-2.5 py-0.5 rounded-full font-semibold bg-amber-100 text-amber-800 border border-amber-300";
+            flowInd.style.opacity = '1';
+          } else {
+            textSpan.textContent = "Habilitar Contacto Térmico";
+            btnToggle.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-accent hover:bg-accent-hover text-white transition flex items-center gap-1.5 shadow-xs";
+            icon.className = "fa-solid fa-lock-open";
+            badge.textContent = "Compartimentos Aislados";
+            badge.className = "text-xs px-2.5 py-0.5 rounded-full font-semibold bg-cyan-100 text-cyan-800 border border-cyan-300";
+            flowInd.style.opacity = '0';
+          }
+        });
+      }
+
+      const btnReset = document.getElementById('btnResetSimulation');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          tempA = 20;
+          tempB = 80;
+          isThermalContact = false;
+          updateTempSlidersUI();
+          document.getElementById('barrierBtnText').textContent = "Habilitar Contacto Térmico";
+          document.getElementById('iconBarrier').className = "fa-solid fa-lock-open";
+          document.getElementById('btnToggleBarrier').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-accent hover:bg-accent-hover text-white transition flex items-center gap-1.5 shadow-xs";
+          document.getElementById('systemStateBadge').textContent = "Compartimentos Aislados";
+          document.getElementById('systemStateBadge').className = "text-xs px-2.5 py-0.5 rounded-full font-semibold bg-cyan-100 text-cyan-800 border border-cyan-300";
+          document.getElementById('heatFlowIndicator').style.opacity = '0';
+          createParticles();
+          showToast("Simulación térmica reiniciada.");
+        });
+      }
+
+      const sliderA = document.getElementById('sliderTempA');
+      const sliderB = document.getElementById('sliderTempB');
+      if (sliderA) {
+        sliderA.addEventListener('input', (e) => {
+          tempA = parseFloat(e.target.value);
+          document.getElementById('dispSliderA').textContent = `${tempA.toFixed(1)} °C`;
+        });
+      }
+      if (sliderB) {
+        sliderB.addEventListener('input', (e) => {
+          tempB = parseFloat(e.target.value);
+          document.getElementById('dispSliderB').textContent = `${tempB.toFixed(1)} °C`;
+        });
+      }
+
+      const btnCerilla = document.getElementById('btnTestCerilla');
+      const btnAgua = document.getElementById('btnTestAgua');
+      if (btnCerilla) btnCerilla.addEventListener('click', () => runIceTest('cerilla'));
+      if (btnAgua) btnAgua.addEventListener('click', () => runIceTest('agua'));
+    }
+
+    window.addEventListener('resize', () => {
+      resizeKineticCanvas();
+      resizeVascularCanvas();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      switchModule(1);
+      initModule1Canvas();
+      initModule2Scales();
+      initModule3Calorimetry();
+      initModule4Vascular();
+      setupEventListeners();
+    });
+  </script>
+</body>
+</html>
